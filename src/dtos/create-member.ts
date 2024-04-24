@@ -10,3 +10,11 @@ export class CreateMember {
     @IsNotEmpty()
     password: string;
 }
+
+export class LoginUser{
+    @IsNotEmpty()
+    @IsEmail()
+    email: string;
+    @IsNotEmpty()
+    password: string;
+}
