@@ -7,7 +7,7 @@ import { Response } from 'express';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Post('login')
+  @Post('user')
   async create(@Body() createUserDto: CreateUserDto, @Res() res: Response) {
     var user = await this.userService.create(createUserDto);
     res.status(user.status).json({msg: user.msg})
