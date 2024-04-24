@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpStatus, Post, Res, Delete, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Post, Res, Delete, Query, UseGuards, Request } from '@nestjs/common';
 import { PrismaService } from './database/prisma.service';
 import { randomUUID } from 'crypto';
 import { CreateMember, LoginUser } from './dtos/create-member';
@@ -7,6 +7,7 @@ import { GetParams } from './dtos/getParam';
 import * as bcrypt from 'bcrypt';
 import { LocalAuthGuard } from './auth/local-auth.guard';
 import { AuthService } from './auth/auth.service';
+import { AuthRequest } from './auth/models/AuthRequest';
 
 @Controller()
 export class AppController {
@@ -22,8 +23,10 @@ export class AppController {
   //GET DATA USER LOGIN
   @Post('login')
   @UseGuards(LocalAuthGuard)
-  async login(){
-    return 'User Authenticated'
+  async login(@Request() req: AuthRequest){
+    console.log(req.user)
+
+    return this.authService.login(req.user)
 
   }
 
