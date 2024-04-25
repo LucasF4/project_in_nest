@@ -18,4 +18,37 @@ model Users {
   name String
   email String @unique
   password String
+  saldoGasto SaldoGasto[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Saldo{
+  idsaldo Int @id @default(autoincrement())
+  valorInit Int
+  valorAt Int
+  saldoGasto SaldoGasto[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Gasto{
+  idgasto Int @id @default(autoincrement())
+  valorGasto Int
+  nameProd String
+  saldoGasto SaldoGasto[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SaldoGasto{
+  idsaldogasto Int @id @default(autoincrement())
+  gasto Gasto @relation(fields: [idgasto], references: [idgasto])
+  idgasto Int
+  saldo Saldo @relation(fields: [idsaldo], references: [idsaldo])
+  idsaldo Int
+  user Users @relation(fields: [iduser], references: [id])
+  iduser String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
