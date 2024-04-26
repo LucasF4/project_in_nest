@@ -26,7 +26,7 @@ model Users {
 model Saldo{
   idsaldo Int @id @default(autoincrement())
   valorInit Int
-  valorAt Int
+  valorAt Int?
   saldoGasto SaldoGasto[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -43,8 +43,8 @@ model Gasto{
 
 model SaldoGasto{
   idsaldogasto Int @id @default(autoincrement())
-  gasto Gasto @relation(fields: [idgasto], references: [idgasto])
-  idgasto Int
+  gasto Gasto ? @relation(fields: [idgasto], references: [idgasto])
+  idgasto Int ?
   saldo Saldo @relation(fields: [idsaldo], references: [idsaldo])
   idsaldo Int
   user Users @relation(fields: [iduser], references: [id])

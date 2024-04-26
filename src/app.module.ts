@@ -6,9 +6,12 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { APP_GUARD } from '@nestjs/core';
+import { SaldoModule } from './saldo/saldo.module';
+import { SaldogastoModule } from './saldogasto/saldogasto.module';
+import { GastoModule } from './gasto/gasto.module';
 
 @Module({
-  imports: [PrismaModule, UserModule, AuthModule],
+  imports: [PrismaModule, UserModule, AuthModule, SaldoModule, SaldogastoModule, GastoModule],
   controllers: [AppController],
   providers: [AppService, {
     provide: APP_GUARD,
