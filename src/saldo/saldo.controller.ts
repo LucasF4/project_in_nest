@@ -3,18 +3,18 @@ import { SaldoService } from './saldo.service';
 import { CreateSaldoDto } from './dto/create-saldo.dto';
 import { IsPublic } from 'src/auth/decorators/is-public.decorator';
 
-@Controller('saldo')
+@Controller()
 export class SaldoController {
   constructor(private readonly saldoService: SaldoService) {}
 
-  @Post()
+  @Post('saldo')
   @HttpCode(HttpStatus.OK)
   async create(@Body() createSaldoDto: CreateSaldoDto, @Req() req) {
     //console.log(req.user)
     return this.saldoService.create(createSaldoDto, req.user);
   }
 
-  @Get()
+  @Get('info')
   @HttpCode(HttpStatus.OK)
   getSaldo(@Req() req){
     return this.saldoService.getSaldo(req.user)

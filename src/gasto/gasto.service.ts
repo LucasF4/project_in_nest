@@ -1,26 +1,32 @@
 import { Injectable } from '@nestjs/common';
 import { CreateGastoDto } from './dto/create-gasto.dto';
 import { UpdateGastoDto } from './dto/update-gasto.dto';
+import { User } from 'src/user/entities/user.entity';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class GastoService {
-  create(createGastoDto: CreateGastoDto) {
-    return 'This action adds a new gasto';
+  constructor(private prisma: PrismaService){}
+  async create(createGastoDto: CreateGastoDto, user: User) {
+    const data = {
+      ...createGastoDto,
+      iduser: user.id
+    }
+
+    var creategasto = await this.prisma.gasto.create({
+      data
+    })
+
+    if(creategasto){
+      return {msg: "Gasto Cadastrado"}
+    }else{
+      throw new Error("Erro ao cadastrar gasto")
+    }
   }
 
-  findAll() {
-    return `This action returns all gasto`;
-  }
+  async getAllGastos(){
+    const response = await this.prisma.$queryRaw`SELECT * FROM gasto`;
 
-  findOne(id: number) {
-    return `This action returns a #${id} gasto`;
-  }
-
-  update(id: number, updateGastoDto: UpdateGastoDto) {
-    return `This action updates a #${id} gasto`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} gasto`;
+    return {...response[0]}
   }
 }

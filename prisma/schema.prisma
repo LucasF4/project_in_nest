@@ -37,6 +37,7 @@ model Gasto{
   valorGasto Int
   nameProd String
   saldoGasto SaldoGasto[]
+  iduser String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
