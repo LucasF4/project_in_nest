@@ -3,11 +3,14 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { Response } from 'express';
 import { IsPublic } from 'src/auth/decorators/is-public.decorator';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiBearerAuth()
 @Controller()
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @ApiTags('users')
   @IsPublic()
   @Post('user')
   async create(@Body() createUserDto: CreateUserDto, @Res() res: Response) {

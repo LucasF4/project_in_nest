@@ -1,7 +1,9 @@
-import { Controller, HttpCode, HttpStatus, Post, Req, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Post, Req, Request, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { IsPublic } from './decorators/is-public.decorator';
+import { LoginDto } from './dto/loginDto';
+import { ApiTags } from '@nestjs/swagger';
 
 
 @Controller()
@@ -12,7 +14,9 @@ export class AuthController {
     @Post('login')
     @HttpCode(HttpStatus.OK)
     @UseGuards(LocalAuthGuard)
-    login(@Request() req){
+    @ApiTags('login')
+    login(@Body() loginDto: LoginDto, @Request() req){
+        //dto apenas para importação no swagger
         return this.authService.login(req.user)
     }
 }
