@@ -33,22 +33,33 @@ export class SaldoService {
   async getSaldo(user: User) {
     console.log(user.id)
 
-    const info = await this.prisma.$queryRaw`SELECT s.valorInit, u.name, g.valorGasto, g.nameProd, CAST((s.valorInit - SUM(g.valorGasto)) as char) as valorAt  FROM saldogasto sg INNER JOIN saldo s ON s.idsaldo = sg.idsaldo INNER JOIN users u ON sg.iduser = u.id INNER JOIN gasto g ON g.iduser = u.id;`;
+    const valorGasto = await this.prisma.$queryRaw`
+      SELECT SUM(valorGasto) as valorGasto FROM Gasto g
+      WHERE iduser = ${user.id};
+    `;
+
+    const prodGastos = await this.prisma.$queryRaw`
+      SELECT g.nameProd, g.valorGasto FROM Gasto g
+      WHERE g.iduser = ${user.id}
+      LIMIT 10 ORDER BY createdAt;
+    `;
+
+    const info = await this.prisma.$queryRaw`
+      SELECT u.name, s.valorInit FROM SaldoGasto sg 
+      INNER JOIN Users u ON sg.iduser = u.id
+      INNER JOIN Saldo s ON s.idsaldo = sg.idsaldo
+      LEFT JOIN Gasto g ON g.iduser = u.id
+      WHERE g.iduser = ${user.id}
+      GROUP BY u.name, s.valorInit;
+    `;
+
+    console.log(info)
+    console.log(valorGasto)
 
     return {
-      user_info: {
-        usuario: {
-          name: info[0].name
-        },
-        gastos: {
-          valorGasto: info[0].valorGasto,
-          nameProd: info[0].nameProd
-        },
-        valores: {
-          valorInit: info[0].valorInit,
-          valorAt: parseInt(info[0].valorAt)
-        }
-      }
+      ...info[0],
+      prodGastos,
+      valorAt: info[0].valorInit - valorGasto[0].valorGasto
     }
   }
 }

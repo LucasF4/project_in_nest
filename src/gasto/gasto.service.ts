@@ -25,7 +25,7 @@ export class GastoService {
   }
 
   async getAllGastos(){
-    const response = await this.prisma.$queryRaw`SELECT * FROM gasto`;
+    const response = await this.prisma.$queryRaw`SELECT * FROM Gasto LIMIT 10`;
 
     return {...response[0]}
   }
