@@ -5,7 +5,6 @@ import { Response } from 'express';
 import { IsPublic } from 'src/auth/decorators/is-public.decorator';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
-@ApiBearerAuth()
 @Controller()
 export class UserController {
   constructor(private readonly userService: UserService) {}

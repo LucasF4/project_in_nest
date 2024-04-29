@@ -3,6 +3,7 @@ import { CreateGastoDto } from './dto/create-gasto.dto';
 import { UpdateGastoDto } from './dto/update-gasto.dto';
 import { User } from 'src/user/entities/user.entity';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { DeleteGastoDto } from './dto/delete-gasto.dto';
 
 @Injectable()
 export class GastoService {
@@ -25,8 +26,56 @@ export class GastoService {
   }
 
   async getAllGastos(){
-    const response = await this.prisma.$queryRaw`SELECT * FROM Gasto LIMIT 10`;
-
-    return {...response[0]}
+    const response = await this.prisma.$queryRaw`SELECT * FROM Gasto`;
+    console.log(response)
+    return {
+      gastos: response
+    }
   }
+
+  async updateGasto(updateGasto: UpdateGastoDto, user: User){
+    
+    const response = await this.prisma.gasto.updateMany({
+      where: {
+        iduser: user.id,
+        idgasto: updateGasto.idgasto
+      },
+      data: {
+        nameProd: updateGasto.nameProd,
+        valorGasto: updateGasto.valorGasto
+      }
+    })
+
+    console.log(response)
+
+    if(response.count == 1){
+      return {
+        msg: "Produto Atualizado com sucesso!"
+      }
+    }else{
+      return {
+        msg: "Produto não localizado"
+      }
+    }
+
+  }
+
+  async deleteGasto(deleteGasto: DeleteGastoDto, user: User){
+    var retur;
+    await this.prisma.gasto.delete({
+      where: {
+        idgasto: deleteGasto.idgasto,
+        iduser: user.id
+      }
+    }).then( response => {
+      console.log(response)
+      retur = "Item deletado com sucesso!";
+    }).catch( err => {
+      console.log(err)
+      retur = "O produto já foi deletado"
+    })
+
+    return {msg: retur}
+  }
+
 }

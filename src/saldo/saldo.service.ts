@@ -49,12 +49,9 @@ export class SaldoService {
       INNER JOIN Users u ON sg.iduser = u.id
       INNER JOIN Saldo s ON s.idsaldo = sg.idsaldo
       LEFT JOIN Gasto g ON g.iduser = u.id
-      WHERE g.iduser = ${user.id}
+      WHERE u.id = ${user.id}
       GROUP BY u.name, s.valorInit;
     `;
-
-    console.log(info)
-    console.log(valorGasto)
 
     return {
       ...info[0],

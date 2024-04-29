@@ -1,7 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Req } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put, Req } from '@nestjs/common';
 import { GastoService } from './gasto.service';
 import { CreateGastoDto } from './dto/create-gasto.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { UpdateGastoDto } from './dto/update-gasto.dto';
+import { DeleteGastoDto } from './dto/delete-gasto.dto';
 
 @ApiTags('Gastos')
 @ApiBearerAuth()
@@ -17,5 +19,15 @@ export class GastoController {
   @Get()
   getAllGastos(){
     return this.gastoService.getAllGastos();
+  }
+
+  @Put('edit')
+  updateGasto(@Body() updateGasto: UpdateGastoDto, @Req() req){
+    return this.gastoService.updateGasto(updateGasto, req.user);
+  }
+
+  @Delete('delete')
+  deleteGasto(@Body() deleteGasto: DeleteGastoDto, @Req() req){
+    return this.gastoService.deleteGasto(deleteGasto, req.user);
   }
 }
