@@ -41,7 +41,7 @@ export class SaldoService {
     const prodGastos = await this.prisma.$queryRaw`
       SELECT g.nameProd, g.valorGasto FROM Gasto g
       WHERE g.iduser = ${user.id}
-      LIMIT 10 ORDER BY createdAt;
+      ORDER BY createdAt ASC LIMIT 10;
     `;
 
     const info = await this.prisma.$queryRaw`
