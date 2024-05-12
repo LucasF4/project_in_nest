@@ -17,16 +17,16 @@ export class GastoController {
   }
 
   @Get()
-  getAllGastos(){
-    return this.gastoService.getAllGastos();
+  getAllGastos(@Req() req){
+    return this.gastoService.getAllGastos(req.user);
   }
 
-  @Put('edit')
+  @Put()
   updateGasto(@Body() updateGasto: UpdateGastoDto, @Req() req){
     return this.gastoService.updateGasto(updateGasto, req.user);
   }
 
-  @Delete('delete')
+  @Delete()
   deleteGasto(@Body() deleteGasto: DeleteGastoDto, @Req() req){
     return this.gastoService.deleteGasto(deleteGasto, req.user);
   }

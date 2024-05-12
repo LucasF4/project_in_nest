@@ -25,8 +25,8 @@ export class GastoService {
     }
   }
 
-  async getAllGastos(){
-    const response = await this.prisma.$queryRaw`SELECT * FROM Gasto`;
+  async getAllGastos(user: User){
+    const response = await this.prisma.$queryRaw`SELECT * FROM Gasto WHERE iduser = ${user.id}`;
     console.log(response)
     return {
       gastos: response

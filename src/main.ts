@@ -23,6 +23,8 @@ async function bootstrap() {
   .addTag('users')
   .addTag('Saldos')
   .addTag('Gastos')
+  .addTag('Ganhos')
+  .addTag('Saldos e Ganhos')
   .setVersion('1.0')
   .build();
 

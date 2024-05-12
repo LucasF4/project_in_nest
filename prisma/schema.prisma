@@ -53,3 +53,12 @@ model SaldoGasto{
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model ganhos{
+  idganho Int @id @default(autoincrement())
+  valorGanho Int
+  nomeProd Int
+  iduser String
+  createAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+}

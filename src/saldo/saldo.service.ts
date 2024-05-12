@@ -31,7 +31,6 @@ export class SaldoService {
   }
 
   async getSaldo(user: User) {
-    console.log(user.id)
 
     const valorGasto = await this.prisma.$queryRaw`
       SELECT SUM(valorGasto) as valorGasto FROM Gasto g
@@ -44,6 +43,17 @@ export class SaldoService {
       ORDER BY createdAt ASC LIMIT 10;
     `;
 
+    const usuario = await this.prisma.$queryRaw`
+      SELECT u.name, u.email, u.createdAt FROM Users u WHERE u.id = ${user.id}
+    `;
+
+    /* const valorTotal = await this.prisma.$queryRaw`
+      SELECT valorInit FROM SaldoGasto sg 
+      LEFT JOIN Saldo s
+      ON s.idsaldo = sg.idsaldo 
+      WHERE sg.iduser = ${user.id}
+    `; */
+
     const info = await this.prisma.$queryRaw`
       SELECT u.name, s.valorInit FROM SaldoGasto sg 
       INNER JOIN Users u ON sg.iduser = u.id
@@ -53,10 +63,12 @@ export class SaldoService {
       GROUP BY u.name, s.valorInit;
     `;
 
+    console.log(info[0])
+
     return {
-      ...info[0],
+      usuario: info[0] == undefined ? usuario : [info[0]],
       prodGastos,
-      valorAt: info[0].valorInit - valorGasto[0].valorGasto
+      valorAt: (info[0] == undefined ? 0 : info[0].valorInit) - (valorGasto[0] == undefined ? 0 : valorGasto[0].valorGasto)
     }
   }
 }
