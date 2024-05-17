@@ -1,12 +1,15 @@
-import { ApiProperty, PartialType } from "@nestjs/swagger";
-import { CreateGanhoDto } from "./create-ganho.dto";
+import { PartialType } from '@nestjs/mapped-types';
+import { IsNumber, IsString } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
+import { CreateGanhoDto } from './create-ganho.dto';
 
-export class DeleteGanho extends PartialType(CreateGanhoDto){
+export class DeleteGanhoDto extends PartialType(CreateGanhoDto) {
 
     @ApiProperty({
-        description: "Identificador do Produto a ser deletado.",
+        description: "Identificador do Gasto a ser editado",
         example: 1
     })
-    idganho?: number;
+    @IsNumber()
+    idganho: number;
 
 }

@@ -13,7 +13,7 @@ export class UpdateGanhoDto extends PartialType(CreateGanhoDto) {
         description: "Nome do motivo do ganho.",
         example: "Salário"
     })
-    nomeProd?: number;
+    nomeProd?: string;
 
     @ApiProperty({
         description: "Valor que o usuário teve de lucro",

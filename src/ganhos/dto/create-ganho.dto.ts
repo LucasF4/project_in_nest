@@ -15,7 +15,8 @@ export class CreateGanhoDto extends Ganho {
         description: "Descrição do Ganho",
         example: "Salário Recebido"
     })
+    
     @IsString()
-    nameProd: string;
+    nomeProd: string;
 
 }

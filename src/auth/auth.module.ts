@@ -10,7 +10,7 @@ import { LoginValidationMiddleware } from './middlewares/login-validation.middle
 @Module({
   imports: [UserModule, JwtModule.register({
     secret: process.env.SECRET,
-    signOptions: {expiresIn: '3m'}
+    signOptions: {expiresIn: '15m'}
   })], //Preciso importar todos os modulos para conseguir usar um outro modulo
   controllers: [AuthController],
   providers: [AuthService, LocalAuthStrategy, JwtStrategy]

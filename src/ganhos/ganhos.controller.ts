@@ -3,7 +3,7 @@ import { GanhosService } from './ganhos.service';
 import { CreateGanhoDto } from './dto/create-ganho.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { UpdateGanhoDto } from './dto/update-ganho.dto';
-import { DeleteGanho } from './dto/delete-ganho.dto';
+import { DeleteGanhoDto } from './dto/delete-ganho.dto';
 
 @ApiTags('Ganhos')
 @ApiBearerAuth()
@@ -27,7 +27,7 @@ export class GanhosController {
   }
 
   @Delete()
-  delete(@Body() deleteGanho: DeleteGanho, @Req() req){
-    return this.ganhosService.deleteGasto(deleteGanho, req.user)
+  delete(@Body() deleteGanho: DeleteGanhoDto, @Req() req){
+    return this.ganhosService.deleteGanho(deleteGanho, req.user)
   }
 }

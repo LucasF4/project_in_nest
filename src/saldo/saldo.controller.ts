@@ -23,4 +23,11 @@ export class SaldoController {
   getSaldo(@Req() req){
     return this.saldoService.getSaldo(req.user)
   }
+  
+  @ApiTags('Saldos')
+  @Delete('saldo')
+  @HttpCode(HttpStatus.OK)
+  delete(@Req() req){
+    return this.saldoService.delete(req.user)
+  }
 }

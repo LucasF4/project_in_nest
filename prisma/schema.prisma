@@ -57,7 +57,7 @@ model SaldoGasto{
 model ganhos{
   idganho Int @id @default(autoincrement())
   valorGanho Int
-  nomeProd Int
+  nomeProd String
   iduser String
   createAt DateTime @default(now())
   updateAt DateTime @updatedAt

@@ -14,6 +14,8 @@ export class SaldogastoService {
       iduser: userid
     }
 
+    console.log(data)
+
     await this.prisma.saldoGasto.create({
       data
     })

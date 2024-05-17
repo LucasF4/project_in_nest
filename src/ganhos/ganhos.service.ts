@@ -3,7 +3,7 @@ import { CreateGanhoDto } from './dto/create-ganho.dto';
 import { User } from 'src/user/entities/user.entity';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { UpdateGanhoDto } from './dto/update-ganho.dto';
-import { DeleteGanho } from './dto/delete-ganho.dto';
+import { DeleteGanhoDto } from './dto/delete-ganho.dto';
 
 @Injectable()
 export class GanhosService {
@@ -41,7 +41,7 @@ export class GanhosService {
         idgasto: updateGanhoDto.idganho
       },
       data: {
-        nameProd: updateGanhoDto.nameProd,
+        nameProd: updateGanhoDto.nomeProd,
         valorGasto: updateGanhoDto.valorGanho
       }
     })
@@ -57,7 +57,7 @@ export class GanhosService {
     }
   }
   
-  async deleteGasto(deleteGasto: DeleteGanho, user: User){
+  async deleteGanho(deleteGasto: DeleteGanhoDto, user: User){
     var retur;
     await this.prisma.ganhos.delete({
       where: {
