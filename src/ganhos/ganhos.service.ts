@@ -27,7 +27,7 @@ export class GanhosService {
   }
 
   async getGanhos(user: User){
-    var returnAllG = await this.prisma.$queryRaw`SELECT * FROM ganhos WHERE iduser = ${user.id} ORDER BY createdAt ASC`;
+    var returnAllG = await this.prisma.$queryRaw`SELECT * FROM ganhos WHERE iduser = ${user.id} ORDER BY createAt DESC`;
     console.log(returnAllG)
     return {
       ganhos: returnAllG
