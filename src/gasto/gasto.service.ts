@@ -26,7 +26,7 @@ export class GastoService {
   }
 
   async getAllGastos(user: User){
-    const response = await this.prisma.$queryRaw`SELECT * FROM Gasto WHERE iduser = ${user.id}`;
+    const response = await this.prisma.$queryRaw`SELECT * FROM Gasto WHERE iduser = ${user.id} ORDER BY createAt ASC`;
     console.log(response)
     return {
       gastos: response
