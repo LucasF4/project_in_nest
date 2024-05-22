@@ -49,7 +49,7 @@ export class SaldoService {
         select *, ('ganho') as tipo from ganhos g2
         where iduser = ${user.id}
       ) as t
-     order by createdAt ASC LIMIT 10;
+     order by createdAt DESC LIMIT 10;
     `;
 
     /* const prodGastos = await this.prisma.$queryRaw`
@@ -75,7 +75,9 @@ export class SaldoService {
     console.log("Valor Gasto: ", valorGasto[0].valorGasto)
     console.log("Valor Inicial: ", info[0] == undefined ? 0 : info[0])
     var calc = (info[0] == undefined ? 0 : info[0].valorInit) + (valorGanho[0] == undefined || valorGanho[0].valorGanho == null ? 0 : parseInt(valorGanho[0].valorGanho)) - (valorGasto[0] == undefined ? 0 : valorGasto[0].valorGasto)
-    console.log(calc)
+    
+    console.log(ultimasTransicoes)
+
     return {
       usuario: info[0] == undefined ? usuario : [info[0]],
       ultimasTransicoes,
